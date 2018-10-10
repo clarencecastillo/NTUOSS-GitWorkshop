@@ -29,19 +29,19 @@ Unlike most of our workshops, we'll actually walk you through the installation a
 
 ### Version Control Systems
 
-![image_01](images/image_01.png)
+![](images/image_01.png)
 
 Version control is a system that keeps track of changes to a set of files over time such that you are able traverse and access certain versions of it later. It's often used to maintain versions of software source code but in reality it can be used with any type of file on a computer as well.
 
 ### Git
 
-There are many things that describe what Git is but one thing I need to point out is that `Git != GitHub`. Git is a Version Control System while GitHub is a hosting service for Git repositories. Essentially, Git is the tool and GitHub is one of the services available out there to host projects that use Git.
+There are many things that can describe what Git is but one thing I need to point out is that `Git != GitHub`. Git is a Version Control System while GitHub is a hosting service for Git repositories. Essentially, Git is the tool and GitHub is one of the services available out there to host projects that use Git.
 
-In a nutshell, Git is a mature, actively maintained open source project developed in 2005 by Linus Torvalds, the famous creator of the Linux OS kernel. 
+Essentially, Git is a distributed version control system aimed at speed, data integrity and support for distributed, non-linear workflows. It is a mature, actively maintained open source project developed in 2005 by Linus Torvalds, the famous creator of the Linux OS kernel. 
 
-### Life Before Git
+### VCS Before Git
 
-![image_02](images/image_02.png)
+![](images/image_02.png)
 
 To fully understand and appreciate Git, we have to first remember what developers were using before it and get an insight as to why it was replaced. Git superseded Subversion by rethinking one of its core designs - centralised revision control. This resulted in a system where branching was highly discouraged because of how difficult it was to do merging and how forking was more or less nonexistent due to its centrality.
 
@@ -84,12 +84,15 @@ These repositories are typically obtained in one of the two ways:
 1. Initialise a local directory as a Git repository, or
 2. *Clone* an existing repository hosted elsewhere.
 
-For this section of the workshop, we'll start fresh by initialising a local directory. To do that, you'll need to use the `git init` command. This command is a one-time directive you use only during the initial setup of a new repo.
+From this section onwards, we'll actually rewrite the iconic song [I'll Make a Man Out of You](https://www.stlyrics.com/lyrics/mulan/illmakeamanoutofyou.htm) using Git to illustrate how easily it can be used to improve your workflow.
+
+We'll start fresh by initialising a local directory. To do that, you'll need to use the `git init <directory>` command. This command is a one-time directive you use only during the initial setup of a new repo.
 
 ```bash
 $ cd /path/to/workspaces
-$ git init git-workshop
-Initialized empty Git repository in /path/to/workspaces/git-workshop/.git/
+$ git init be-a-man
+Initialized empty Git repository in /path/to/workspaces/be-a-man/.git/
+$ cd be-a-man
 ```
 
 For now, take note of the path which you created this repository. We'll come back to it once we've covered some required fundamentals about Git.
@@ -136,11 +139,13 @@ The basic git workflow goes something like this:
 2. Selectively stage changes that are to be part of the next commit. These can be in the form of entire files or simply chunks of lines of code changed within a file.
 3. Commit the staged stuff to the git directory. This stores a permanent snapshot of the tracked files into the commit history.
 
-Open your favourite text editor and create a new text file named `file_01.txt`. In the first line, type `f1`. Although trivial, this line represents a segment of your source code which you'd like to be comitted to the repository.
+Open your favourite text editor and create a new text file named `lyrics.txt`. Let's begin by writing the song's first stanza. This represents a segment of your source code you've written which you'd like to be comitted to the repository.
 
-`file_01.txt`
 ```
-f1
+Let's get down to business
+To defeat the Huns.
+Did they send me daughters
+When I asked for sons?
 ```
 
 To see our change, run `git status` again with the new file. You'll see that it is untracked because Git sees a file you didn’t have before. 
@@ -154,15 +159,17 @@ No commits yet
 Untracked files:
   (use "git add <file>..." to include in what will be committed)
 
-	file_01.txt
+	lyrics.txt
 
 nothing added to commit but untracked files present (use "git add" to track)
 ```
 
-In order to begin tracking the new file, use the `git add` command. Running `git status` again right after that should indicate that `file_01.txt` is now tracked and ready for commit.
+#### Tracking New Files
+
+To track the new file, use the `git add` command. Running `git status` again right after it should indicate that `lyrics.txt` is now tracked and ready for a commit.
 
 ```bash
-$ git add file_01.txt
+$ git add lyrics.txt
 $ git status
 On branch master
 
@@ -171,14 +178,193 @@ No commits yet
 Changes to be committed:
   (use "git rm --cached <file>..." to unstage)
 
-	new file:   file_01.txt
-
+	new file:   lyrics.txt
 ```
 
-- Staging -> Committing
-  - git add CommitTest.txt
-  - git commit -m "added CommitTest.txt to the repo"
-- Git status and git diff
+![](images/image_05.png)
+
+#### Modifying Staged Files
+
+To illustrate how staging really works, let's take it up a notch by modifying our file even after staging it. Open `lyrics.txt` and add the song's next stanza right below the first one. Your file should now look like this:
+
+```
+Let's get down to business
+To defeat the Huns.
+Did they send me daughters
+When I asked for sons?
+
+You're the saddest bunch I ever met
+But you can bet before we're through
+Mister, I'll make a man
+Out of you.
+```
+
+Note that the above modification does not in anyway affect what's already staged because Git stages a file exactly as it is when the `git add` command was executed. If you commit now, `lyrics.txt` will be as it was when we staged it and this is how it will go into the commit, not the version of the file as it looks in your working directory which includes the second stanza.
+
+To verify, check your repository's status again and you'll notice that it detected a modification to our file. You'll see that `lyrics.txt` is now written as both staged and not staged. The staged entry refers to the version of the file when we tracked it for the first time using `git add` and the unstaged version refers to the tracked version of the file including our modification.
+
+```bash
+$ git status
+On branch master
+
+No commits yet
+
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+
+	new file:   lyrics.txt
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   lyrics.txt
+```
+
+![](images/image_06.png)
+
+If you think `git status` is too vague for you and if you want to see the per-line diffrence between what's in your working directory and what's in your staging area, use `git diff`. This command will show you which lines you've changed but not yet staged.
+
+```
+$ git diff
+diff --git a/lyrics.txt b/lyrics.txt
+index fd1a53c..8e4f240 100644
+--- a/lyrics.txt
++++ b/lyrics.txt
+@@ -1,4 +1,9 @@
+ Let's get down to business
+ To defeat the Huns.
+ Did they send me daughters
+-When I asked for sons?
+\ No newline at end of file
++When I asked for sons?
++
++You're the saddest bunch I ever met
++But you can bet before we're through
++Mister, I'll make a man
++Out of you.
+\ No newline at end of file
+```
+
+Suppose we need both stanzas to be included in our first commit. We need to run `git add` again to stage the latest version of the file. Notice that Git squashes your modifications together such that there is no distinction between the two changes. It would appear as if you wrote both stanzas together which is expected because the file hasn't been committed yet.
+
+```bash
+$ git add lyrics.txt
+$ git status
+On branch master
+
+No commits yet
+
+Changes to be committed:
+  (use "git rm --cached <file>..." to unstage)
+
+	new file:   lyrics.txt
+```
+
+#### Comitting Staged Files
+
+Now that we're at the final stage of the workflow, commit the changes using `git commit`. For traceability, Git requires every commit to be accompanied by a message which summarises the change done. The easiest way to provide this is to utilise the `-m` flag like this:
+
+```bash
+$ git commit -m "Implement first and second stanzas"
+[master (root-commit) 8f1d825] Implement first and second stanzas
+ 1 file changed, 9 insertions(+)
+ create mode 100644 lyrics.txt
+```
+
+Executing `git status` again tells us that there is nothing in our staging area and that our working directory is clean. Clean just means that our working directory is at par with the latest snapshot (commit) of our git directory.
+
+```bash
+$ git status
+On branch master
+nothing to commit, working tree clean
+```
+
+![](images/image_07.png)
+
+#### Viewing Staged and Unstaged Changes
+
+For this section, we'll be discussing how to view the stuff that's already inside your staging area. This comes really handy especially because it tells you what's going to be part of your next commit.
+
+Edit and stage `lyrics.txt` one more time to implement the third stanza. Our file should now look something like this after this step.
+
+```
+Let's get down to business
+To defeat the Huns.
+Did they send me daughters
+When I asked for sons?
+
+You're the saddest bunch I ever met
+But you can bet before we're through
+Mister, I'll make a man
+Out of you.
+
+Tranquil as a forest
+But on fire within.
+Once you find your center
+You are sure to win.
+```
+
+To review the content of our staging area, use `git diff` again but with the `--staged` flag. This command compares your staging area to the last commit.
+
+```
+diff --git a/lyrics.txt b/lyrics.txt
+index 8e4f240..c52faf0 100644
+--- a/lyrics.txt
++++ b/lyrics.txt
+@@ -6,4 +6,9 @@ When I asked for sons?
+ You're the saddest bunch I ever met
+ But you can bet before we're through
+ Mister, I'll make a man
+-Out of you.
+\ No newline at end of file
++Out of you.
++
++Tranquil as a forest
++But on fire within.
++Once you find your center
++You are sure to win.
+\ No newline at end of file
+```
+
+The output aboves tells us that we've modified the line `Out of you.` and also inserted the new stanza after it. It may not be obvious at first but the reason why `Out of you.` is detected as modified is because we've added an invisible newline character `\n` after it so that we can insert the next stanza.
+
+Commit the staged entries using `git commit` and make sure to provide a commit message using the `-m` flag.
+
+```bash
+$ git commit -m "Implement third stanza"
+[master 124091f] Implement third stanza
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+```
+
+![](images/image_08.png)
+
+#### Viewing Commit History
+
+After having created several commits, you’ll probably want to look back to see what has happened. To do this, Git provides the `git log` command which shows the commit logs.
+
+```bash
+$ git log
+commit 124091f47519b58f33068c5fb65be30fbf4f255c (HEAD -> master)
+Author: Clarence Castillo <clarencecastillo@outlook.com>
+Date:   Wed Oct 10 15:07:14 2018 +0800
+
+    Implement third stanza
+
+commit 8f1d8257ba8bd5b32041f9422887fc221060a86d
+Author: Clarence Castillo <clarencecastillo@outlook.com>
+Date:   Wed Oct 10 15:02:59 2018 +0800
+
+    Implement first and second stanzas
+```
+
+By default, Giit lists the commits made in a repository in reverse chronological order, with the most recent ones up on the top. Each commit is accompanied with its SHA-1 checksum, the name and email of the author, the date written and the commit message.
+
+#### Good Commit Messages
+
+### Branching
+
+
 
 ### Committing
 - Good commit messages
