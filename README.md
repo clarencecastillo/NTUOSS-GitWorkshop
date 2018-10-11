@@ -75,18 +75,9 @@ $ git config --global user.email "useremail@email.com"
 
 ## Git Fundamentals
 
-### Git Repositories
+For the purposes of this workshop, we'll rewrite the iconic song [I'll Make a Man Out of You](https://www.stlyrics.com/lyrics/mulan/illmakeamanoutofyou.htm) utilising Git to illustrate how easily it can be used to improve your workflow.
 
-A Git repository is a virtual storage of your project. Kinda like a directory accompanied by a ledger that keeps track of all changes done to its contents.
-
-These repositories are typically obtained in one of the two ways:
-
-1. Initialise a local directory as a Git repository, or
-2. *Clone* an existing repository hosted elsewhere.
-
-From this section onwards, we'll actually rewrite the iconic song [I'll Make a Man Out of You](https://www.stlyrics.com/lyrics/mulan/illmakeamanoutofyou.htm) using Git to illustrate how easily it can be used to improve your workflow.
-
-We'll start fresh by initialising a local directory. To do that, you'll need to use the `git init <directory>` command. This command is a one-time directive you use only during the initial setup of a new repo.
+For now, let's start fresh by initialising a local directory. To do that, you'll need to use the `git init <directory>` command. This command is a one-time directive you use only during the initial setup of a new repo. Initialise a git repository named `be-a-man` and `cd` into that automatically created folder.
 
 ```bash
 $ cd /path/to/workspaces
@@ -96,6 +87,17 @@ $ cd be-a-man
 ```
 
 For now, take note of the path which you created this repository. We'll come back to it once we've covered some required fundamentals about Git.
+
+### Git Repositories
+
+A Git repository is a virtual storage of your project. Kinda like a directory accompanied by a ledger that keeps track of all changes done to its contents.
+
+These repositories are usually obtained in one of the two ways. We can either
+
+1. Initialise a local directory as a Git repository, or
+2. *Clone* an existing repository hosted elsewhere.
+
+What we just did earlier was to initialise a local directory as a Git repository using `git init`. Notice that Git automatically creates the directory if you supply it the name of the folder as an argument, otherwise it will initialise the exact directory where the command was executed.
 
 ### The Three "Trees"
 
@@ -114,7 +116,15 @@ There are three main sections which Git maintains to keep track of the repositor
 
 ![](images/image_04.png)
 
-#### Checking Repository Status
+## Basic Git Workflow
+
+The basic git workflow goes something like this:
+
+1. Add/modify files inside the working directory. This is usually done outside using an IDE.
+2. Selectively stage changes that are to be part of the next commit. These can be in the form of entire files or simply chunked lines of code changed within a file.
+3. Commit the staged stuff to the git directory. This stores a permanent snapshot of the tracked files into the commit history.
+
+### Checking Repository Status
 
 To determine which files are in which state, use the `git status` command. Running this command immediately after `git init` should give the following output.
 
@@ -131,13 +141,7 @@ The output above tells us that none of the tracked files are modified. This is e
 
 The command also tells us which *branch* we're currently on. By default, this branch is always `master` but we can easily change this to a different branch.  More on branching at the later part of the workshop.
 
-### Basic Git Workflow
-
-The basic git workflow goes something like this:
-
-1. Add/modify files inside the working directory. This is usually done outside using an IDE.
-2. Selectively stage changes that are to be part of the next commit. These can be in the form of entire files or simply chunks of lines of code changed within a file.
-3. Commit the staged stuff to the git directory. This stores a permanent snapshot of the tracked files into the commit history.
+### Modifying Files Inside The Working Directory
 
 Open your favourite text editor and create a new text file named `lyrics.txt`. Let's begin by writing the song's first stanza. This represents a segment of your source code you've written which you'd like to be comitted to the repository.
 
@@ -164,7 +168,7 @@ Untracked files:
 nothing added to commit but untracked files present (use "git add" to track)
 ```
 
-#### Tracking New Files
+### Tracking New Files
 
 To track the new file, use the `git add` command. Running `git status` again right after it should indicate that `lyrics.txt` is now tracked and ready for a commit.
 
@@ -327,7 +331,7 @@ index 8e4f240..c52faf0 100644
 \ No newline at end of file
 ```
 
-The output aboves tells us that we've modified the line `Out of you.` and also inserted the new stanza after it. It may not be obvious at first but the reason why `Out of you.` is detected as modified is because we've added an invisible newline character `\n` after it so that we can insert the next stanza.
+You may be surprised that the output aboves tells us that we've also modified the line `Out of you.` although all we did was just insert the new stanza after it. It's not be obvious at first but the reason why `Out of you.` is detected as modified is because we've added an invisible newline character `\n` after it so that we can insert the next stanza.
 
 Commit the staged entries using `git commit` and make sure to provide a commit message using the `-m` flag.
 
@@ -358,19 +362,26 @@ Date:   Wed Oct 10 15:02:59 2018 +0800
     Implement first and second stanzas
 ```
 
-By default, Giit lists the commits made in a repository in reverse chronological order, with the most recent ones up on the top. Each commit is accompanied with its SHA-1 checksum, the name and email of the author, the date written and the commit message.
+By default, Git lists the commits made in a repository in reverse chronological order, with the most recent ones up on the top. Each commit is accompanied with its SHA-1 checksum, the name and email of the author, the date written and the commit message.
 
-#### Good Commit Messages
+### Good Commit Messages
 
-### Branching
+There isn't a strict do-or-die rule out there that tells you how exactly you should be writing your commit messages but there are some agreed upon guidelines which attempt to standardise this practice. 
 
+For starters, here's a list of tips you may want to keep in mind when writing commit messages:
 
+1. Limit your commit message to 50 characters
+2. Capitalise the message
+3. Do not end the message with a punctuation
+4. Use the imperative stance
+5. Avoid uninformative messages
+6. Avoid look-elsewhere messages
 
-### Committing
-- Good commit messages
-- Undoing commit messages
-- Git Stash
-- .gitignore
+One trick that I always use when writing a commit message is to try come up with a statement which completes the phrase `If applied, this commit will ...`. This method kinda forces you to write in the imperative stance and encourages you to give a descriptive phrase about the commit.
+
+In addition, the commit message is conventionally split into the message title and message body using a blank line. Though used in practice, this is actually not required especially if the subject title is already sufficient to describe the change.
+
+Having a good guideline for creating commits and sticking to it makes working with Git and collaborating with other developers a lot easier.
 
 ### Branching
 - Creating Branches
@@ -378,15 +389,11 @@ By default, Giit lists the commits made in a repository in reverse chronological
 - Merging vs Rebasing
 - Resolving merge conflicts
 
-Syn
-- Pushing Changes
-
-GitHub
+### Wokring Collaboratively
+- Remote Repositories
 - Forking
-- Cloning
+- Pushing Changes
 - Pull Requests
-
-GitFlow
 
 ### Git GUI Client
 
