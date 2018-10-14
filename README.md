@@ -374,14 +374,13 @@ For starters, here's a list of tips you may want to keep in mind when writing co
 2. Capitalise the message
 3. Do not end the message with a punctuation
 4. Use the imperative stance
-5. Avoid uninformative messages
-6. Avoid look-elsewhere messages
+5. Avoid uninformative, look-elsewhere messages
 
-One trick that I always use when writing a commit message is to try come up with a statement which completes the phrase `If applied, this commit will ...`. This method kinda forces you to write in the imperative stance and encourages you to give a descriptive phrase about the commit.
+One trick that I always use when writing a commit message is to try come up with a statement which completes the phrase `If applied, this commit will ...`. This method forces you to write in the imperative stance and encourages you to give a descriptive phrase about the commit.
 
-In addition, the commit message is conventionally split into the message title and message body using a blank line. Though used in practice, this is actually not required especially if the subject title is already sufficient to describe the change.
+In addition, the commit message is conventionally split into the message title and message body using a blank line. Though used in practice, this is actually not required especially if the subject title is more than sufficient to describe the change.
 
-Having a good guideline for creating commits and sticking to it makes working with Git and collaborating with other developers a lot easier.
+Different teams practice different strategies but what's important is that having a good guideline for creating commits and sticking to it makes working with Git and collaborating with other developers a lot easier.
 
 ### Branching
 - Creating Branches
