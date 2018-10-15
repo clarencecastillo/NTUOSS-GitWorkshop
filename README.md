@@ -515,24 +515,40 @@ $ git commit -m "Edit second stanza and chorus"
 
 #### Merging Branches
 
-Suppose we've decided that our work with the modification of the song is complete and ready to be merged back into the main branch. To do this, switch to the target branch `master` and run the command `git merge <branch>`.
+Suppose we've decided that our work with the modification of the song is complete and that we're ready for it to be merged back into the main branch. There are a few ways we can go about merging these two branches together. We can either *fast-forward* `master` into `business`, or squash everything we've done in `business` as one big chunk and commit it to `master`.
 
-Note that in a merge, there's always a source branch a target branch. The distinction between the two determines which moves forward in the tree. In our case, we can either merge `master` into `business` or merge `business` into `master`.
-
-Since `master` is pointing to a commit which `business` branched out of, we can call the former type of merge a `fast-forward` merge because all we have to do is make the pointer traverse along the commit path all the way to where `business` is currently located.
+Since `master` is pointing to a commit which `business` branched out of, and that there's no new commits to `master`, we can easily do a `fast-forward` merge because all we have to do is make the pointer traverse along the commit path all the way to where `business` is currently located.
 
 ![](images/image_13.png)
 
-As for the latter type of merge, it can be viewed as squashing all the changes in the `business` branch as one big change and applying that to the `master` branch, creating a new commit in the process.
+```bash
+$ git checkout master
+Switched to branch 'master'
+$ git merge business
+Updating acc59ac..30e6abb
+Fast-forward
+ lyrics.txt | 28 ++++++++++++++--------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
+```
+
+As for the latter type of merge, it can be viewed as squashing all the changes in the `business` branch as one big change and applying that to the `master` branch, creating a new commit in the process. We can do this with the same merge command but with the `--no-ff` flag.
 
 ![](images/image_14.png)
 
-There's no one right way of doing this but what's important is that you know the difference between the two. Personally, I'd prefer the second approach because it explicitly writes to the commit history that we've merged `business` into `master`, unlike the first approach which silently moves the pointer into another commit.
-
-For this section, let's merge `business` into `master` using the following commands.
-```
+```bash
 $ git checkout master
+Switched to branch 'master'
+$ git merge business --no-ff -m "Merge business into master"
+Merge made by the 'recursive' strategy.
+ lyrics.txt | 28 ++++++++++++++--------------
+ 1 file changed, 14 insertions(+), 14 deletions(-)
 ```
+
+In every merge, there's a source branch and a target branch. The distinction between the two determines which moves forward in the tree. Notice that for both methods above we had to checkout the target branch `master` first before running the merge.
+
+In our case, we can only merge `buisness` into `master` because everything in `master` is already in `business`. Trying to merge `master` into `business` will tell you that the branch is already up to date and that there's no need for a merge.
+
+There's no one right way of doing this but what's important is that you know the difference between the two. Personally, I prefer the second approach because it explicitly writes to the commit history that we've merged `business` into `master`, unlike the first approach which silently moves the pointer into another commit.
 
 ### Wokring Collaboratively
 - Remote Repositories
