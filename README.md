@@ -550,12 +550,70 @@ In our case, we can only merge `buisness` into `master` because everything in `m
 
 There's no one right way of doing this but what's important is that you know the difference between the two. Personally, I prefer the second approach because it explicitly writes to the commit history that we've merged `business` into `master`, unlike the first approach which silently moves the pointer into another commit.
 
-### Wokring Collaboratively
-- Remote Repositories
-- Forking
-- Pushing Changes
-- Pull Requests
+### GUI Clients
 
-### Git GUI Client
+Using Git via the terminal can be really fast and it makes sense to learn it first because the terminal is Git's native environment. That's where the latest features are always available and only in the command line do we see the full suite of tools Git has to offer.
 
-1. Download and install the latest version of [GitKraken](https://www.gitkraken.com/). As with most things in life, you're free to use any GUI Git client but we'll be using this one in particular for the workshop so you're on your own if you're using anything else.
+Although some developers still prefer the text-based interface, it may not always be the best choice for all tasks especially when a visual representation is needed or when its users are much more comfortable with a point-and-click interface.
+
+![](images/image_15.png)
+
+For this workshop, we'll be using [GitKraken](https://www.gitkraken.com/git-client) to illustrate how GUIs can be used to manage your Git workflow. As for this section,  the walkthrough will be done live so there's no need to refer to this document until the next section.
+
+### Working Collaboratively
+
+To be able to collaborate with other developers on any Git project, you need to know how to manage your remote repositories. For this section, we'll be discussing remote management basics such as adding remotes, cloning, forking, synchronising and pushing. At the end of it, we'll also cover how to open pull requests to let other repository maintainers synchronise their version of the code with your copy.
+
+In particular, we'll be using GitHub Flow as an example of how developers can easily work together using Git. It is designed around a particular workflow centered on what we call a Pull Request.
+
+1. Fork the project
+2. Create a topic branch from main branch
+3. Make commits to that branch
+4. Push branch to GitHub
+5. Open a Pull Request
+6. Discuss, review, modify branch
+7. Project owner merges or closes the Pull Request
+
+For the rest of the workshop, we'll use the GUI client and GitHub to visually walk you through how to learn these remote management skills. I'll walk you through how to create a repository on GitHub, how to add that remote to the repository we just made, and how to push our changes to the remote repository.
+
+#### Remote Repositories
+
+Remote repositories are copies of your project that are hosted somewhere else. The term *remote* could mean a public Git hosting service like [GitHub](https://github.com/), or a self-hosted server running Git, or even the very same machine you're working on but on a different directory. 
+
+![](images/image_16.png)
+
+#### Cloning
+
+*Cloning* is the process of using Git to receive a full copy of a remote repository into your local machine. Essentailly, this process involves initialising a local repository and then synchronising it to the latest commit.
+
+1. Create a new directory
+2. Initialise as Git repository
+3. Add remote
+4. Syncrhonise with remote repository
+5. Checkout default branch
+
+![](images/image_17.png)
+
+#### Forking
+
+*Forking* a repo involves creating an entire copy of one repository into a new repository. This is often done via the Git hosting service  to either propose changes to someone else's project or to create a new independent version of the project.
+
+![](images/image_18.png)
+
+#### Synchronising
+
+When changes are available in branch `master` of remote `origin` that is not present in our local copy, it is often denoted that branch `origin/master` is ahead of `master` (local). Conversely speaking, we can also say that `master` (local) is behind `origin/master`. To synchronise our local copy with the remote, we can either *fetch* and then manually do a fast forward or do a *pull*.
+
+We use the term `fetch` to get the changes done available in our remote repository. After doing that, you should now have references to all the branches from that remote which you can merge in or inspect from your local copy.
+
+![](images/image_19.png)
+
+The other term `pull` is used when you want to `fetch` and then `fast-forward` right after it. They're pretty much the same except that it automatically merges the changes done in the remote repository branch into your local branch.
+
+When changes are done in our local branch `master` which aren't reflected in branch `master` of remote `origin`, then we can say that `origin/master` is behind `master` (local). We use the term `push` to synchronise our local changes to the remote repository.
+
+![](images/image_20.png)
+
+#### Pull Requests
+
+Issuing pull requests is the formal way of telling others about changes you've done to a repository. Once it's created, interested parties (usually project maintainers, reviewers, owners, etc) can review the set of changes, discuss potential modifications and even push follow-up commits if needed.
