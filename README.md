@@ -8,6 +8,9 @@ This workshop features a hands-on approach to learning the basics of [Git](https
 
 ---
 
+![](images/image_00.png)
+*Artwork by [@hyde-brendan](https://github.com/hyde-brendan)*
+
 ### Workshop Details
 **When**: Friday, 19 October 2018. 6:30 PM - 8:30 PM.</br>
 **Where**: LT1 Nanyang Technological University</br>
