@@ -78,7 +78,7 @@ $ git config --global user.email "useremail@email.com"
 
 ## Git Fundamentals
 
-For the purposes of this workshop, we'll rewrite the iconic song [I'll Make a Man Out of You](https://www.stlyrics.com/lyrics/mulan/illmakeamanoutofyou.htm) utilising Git to illustrate how easily it can be used to improve your workflow.
+For the purposes of this workshop, we'll rewrite the iconic song [I'll Make a Man Out of You](https://www.youtube.com/watch?v=TVcLIfSC4OE) utilising Git to illustrate how easily it can be used to improve your workflow.
 
 For now, let's start fresh by initialising a local directory. To do that, you'll need to use the `git init <directory>` command. This command is a one-time directive you use only during the initial setup of a new repo. Initialise a git repository named `be-a-man` and `cd` into that automatically created folder.
 
