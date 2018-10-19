@@ -549,7 +549,7 @@ Merge made by the 'recursive' strategy.
 
 In every merge, there's a source branch and a target branch. The distinction between the two determines which moves forward in the tree. Notice that for both methods above we had to checkout the target branch `master` first before running the merge.
 
-In our case, we can only merge `buisness` into `master` because everything in `master` is already in `business`. Trying to merge `master` into `business` will tell you that the branch is already up to date and that there's no need for a merge.
+In our case, we can only merge `business` into `master` because everything in `master` is already in `business`. Trying to merge `master` into `business` will tell you that the branch is already up to date and that there's no need for a merge.
 
 There's no one right way of doing this but what's important is that you know the difference between the two. Personally, I prefer the second approach because it explicitly writes to the commit history that we've merged `business` into `master`, unlike the first approach which silently moves the pointer into another commit.
 
